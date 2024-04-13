@@ -5,10 +5,11 @@ from telebot.types import ReplyKeyboardMarkup, KeyboardButton
 import database
 import buttons
 
-TOKEN = '6830535886:AAGI1IYi4Afm3WqLqVydUVzXcc9xaXNaPCc'
+TOKEN = '6579478804:AAHx0HKe0GFmd3MN8WbldHr1Ir4tG7uUTqY'
 bot = telebot.TeleBot(TOKEN, threaded=False)
 
-adminnn = 6983244704
+adminnn = 6833700546
+
 
 @bot.message_handler(commands=['start'])
 def start_message(message):
@@ -40,7 +41,7 @@ def get_contact(message):
 
 @bot.message_handler(commands=['admin'])
 def admin(message):
-    if message.from_user.id == 6983244704:
+    if message.from_user.id == 6833700546:
         bot.send_message(message.from_user.id, 'Вы вошли в админ панель ⬅️', reply_markup=buttons.admin_menu())
 
 
@@ -228,9 +229,9 @@ def text_messages(message):
     elif message.text == 'назад':
         bot.send_message(message.from_user.id , "Вы в главном меню", reply_markup=buttons.main_menu())
 
-    admin_id = 6983244704
+    admin_id = 6833700546
 
-    if message.from_user.id == admin_id or message.from_user.id == 6983244704:
+    if message.from_user.id == admin_id or message.from_user.id == 6833700546:
         if message.text == 'Добавить товар':
             action = 'добавить'
             bot.send_message(admin_id, 'Введите название товара', reply_markup=types.ReplyKeyboardRemove())
@@ -418,9 +419,9 @@ def get_accept(message):
         database.add_order(user_id, order[0], order[1], order[-1])
         bot.send_location(user_id, latitude, longitude)
         bot.send_message(user_id, full_order_message)
-        bot.send_message(6983244704, full_admin_message)
-        bot.send_location(6983244704, latitude, longitude)
-        bot.send_message(6983244704, "По адресу")
+        bot.send_message(6833700546, full_admin_message)
+        bot.send_location(6833700546, latitude, longitude)
+        bot.send_message(6833700546, "По адресу")
   
 
         database.clear_user_cart(user_id)
