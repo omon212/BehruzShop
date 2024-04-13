@@ -212,32 +212,22 @@ def handle_location(message):
     location = message.location
     latitude = location.latitude
     longitude = location.longitude
-    bot.reply_to(message, "Лактация принята",)
+    bot.reply_to(message, "Лакация принята",)
     bot.send_message(message.from_user.id, "подтвердить товар", reply_markup=buttons.confirm_order_button())
     bot.register_next_step_handler(message, get_accept)
     
 
+
 @bot.message_handler(content_types=['text'])
 def text_messages(message):
-    if message.text == "я пойду":
-        bot.send_message(message.from_user.id, f' перейдите по ссылке администратора бота. Администратор вышлет вам адрес и вы заберете свой товар.\n @{"BZA2010"}\n👆admin')
-    elif message.text == "доставить это.":
+    if message.text == "Забрать самому":
+        bot.send_message(message.from_user.id, f' Перейдите по ссылке администратора бота. Администратор вышлет вам адрес и вы заберете свой товар.\n @{"BZA2010"}\n👆admin')
+    elif message.text == "Яндекс доставка":
         bot.send_location(message.from_user.id, latitude, longitude)
-        bot.send_message(message.from_user.id , f'если вам нужна служба доставки \nОтправьте необходимую сумму на карту 9843727894327878 и отправьте чек администратору, администратор свяжется с вами в течение 1-2 часов после определения цены товара и суммы оплаченной вами оплаты. \n и мы доставим по указанному вами адресу. Доставка тоже платная.\n @{"BZA2010"}\n👆admin')
+        bot.send_message(message.from_user.id , f'Если вам нужна служба доставки \nОтправьте необходимую сумму на карту 9843727894327878 и отправьте чек администратору, администратор свяжется с вами в течение 1-2 часов после определения цены товара и суммы оплаченной вами оплаты. \n и мы доставим по указанному вами адресу. Доставка тоже платная.\n @{"BZA2010"}\n👆admin')
     elif message.text == 'назад':
-        bot.send_message(message.from_user.id , "вы в главном меню", reply_markup=buttons.main_menu())
-    else:
-        kb = ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
+        bot.send_message(message.from_user.id , "Вы в главном меню", reply_markup=buttons.main_menu())
 
-        btn_1 = KeyboardButton('я пойду')
-        btn_2 = KeyboardButton('доставить это.')
-        btn_3 = KeyboardButton('назад')
-
-        kb.row(btn_1, btn_2, btn_3)
-        bot.send_message(message.from_user.id, "Вы забираете товар сами или вам нужна доставка?", reply_markup=kb)
-            
-    
-    
     admin_id = 6983244704
 
     if message.from_user.id == admin_id or message.from_user.id == 6983244704:
@@ -394,7 +384,6 @@ def get_count(message, pr_name, category):
         count = int(message.text)
 
         database.add_product_to_cart(message.from_user.id, pr_name, count)
-        bot.send_message(6983244704, f'Foydalanuvchi zakazi :{pr_name}\n neshtaligi:{count} \n ')
 
         bot.send_message(message.from_user.id, 'Товар добавлен в корзину!', reply_markup=buttons.get_ptoducts_by_category_button(category))
         bot.register_next_step_handler(message, product_name, category)
@@ -438,8 +427,9 @@ def get_accept(message):
         
         kb = ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
 
-        btn_1 = KeyboardButton('я пойду')
-        btn_2 = KeyboardButton('доставить это.')
+        btn_1 = KeyboardButton('Забрать самому')
+        
+        btn_2 = KeyboardButton('Яндекс доставка')
         btn_3 = KeyboardButton('назад')
 
         kb.row(btn_1, btn_2, btn_3)
